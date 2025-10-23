@@ -5,8 +5,18 @@ from app.db import SessionLocal, init_db
 from app.models import Task
 from app.schemas import TaskIn, TaskOut, TaskUpdate
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="Task API")
 
+origins = ["http://localhost:5173", "http://127.0.0.1:5173", #frontend 
+        "http://localhost:3000", "http://127.0.0.1:3000"] #api
+
+app.add_middleware(CORSMiddleware, 
+        allow_origins=origins, #dominios permitidos
+        allow_credentials=True, #permite cookies/tokens
+        allow_methods=["*"], #permite todos los metodos (GET, POST, PATCH, etc.)
+        allow_headers=["*"]) #permite todos los headers
 
 # Dependencia de DB
 #DB Dependency
